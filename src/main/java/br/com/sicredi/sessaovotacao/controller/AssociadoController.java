@@ -5,12 +5,14 @@ import br.com.sicredi.sessaovotacao.dto.AssociadoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.AssociadoResponseDTO;
 import br.com.sicredi.sessaovotacao.service.AssociadoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @CrossOrigin("*")
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class AssociadoController {
     @PostMapping
     public ResponseEntity<AssociadoResponseDTO> salvar(@RequestBody @Valid AssociadoRequestDTO requestDTO) {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(CREATED)
                 .body(converter.toResponseDto(
                         service.salvar(converter.requestDtoToEntity(requestDTO))));
     }
@@ -32,14 +34,14 @@ public class AssociadoController {
     @GetMapping
     public ResponseEntity<List<AssociadoResponseDTO>> listar() {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(OK)
                 .body(converter.toListResponseDto(service.listar()));
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<AssociadoResponseDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(OK)
                 .body(converter.toResponseDto(service.buscarPorId(id)));
     }
 
@@ -47,7 +49,7 @@ public class AssociadoController {
     public ResponseEntity<AssociadoResponseDTO> atualizar(@RequestBody @Valid AssociadoRequestDTO requestDTO,
                                                           @PathVariable Long id) {
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(OK)
                 .body(converter.toResponseDto(
                         service.atualizar(converter.requestDtoToEntity(requestDTO), id)));
     }

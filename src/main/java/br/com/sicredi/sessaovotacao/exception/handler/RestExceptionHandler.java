@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -72,17 +71,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         ValidationError error = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
 
         return ResponseEntity.status(BAD_REQUEST).body(error);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
-                                                                          HttpHeaders headers,
-                                                                          HttpStatus status,
-                                                                          WebRequest request) {
-        String message = "O parâmetro " + ex.getParameterName() + " do tipo " + ex.getParameterType() + " é obrigatório ";
-        StandardError error = new StandardError(status.value(), message);
-
-        return ResponseEntity.status(status).body(error);
     }
 
     @Override
