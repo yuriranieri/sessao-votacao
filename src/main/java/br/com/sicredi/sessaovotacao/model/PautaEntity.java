@@ -12,12 +12,15 @@ import javax.persistence.*;
 @Data
 @Builder
 @Entity
-@Table(name = "pauta")
+@Table(name = "Pauta")
 public class PautaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String assunto;
+
+    @OneToOne(mappedBy = "pauta")
+    private SessaoEntity sessao;
 
 }
