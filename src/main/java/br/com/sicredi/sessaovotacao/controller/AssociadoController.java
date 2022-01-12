@@ -36,4 +36,26 @@ public class AssociadoController {
                 .body(converter.toListResponseDto(service.listar()));
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<AssociadoResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(converter.toResponseDto(service.buscarPorId(id)));
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<AssociadoResponseDTO> atualizar(@RequestBody @Valid AssociadoRequestDTO requestDTO,
+                                                          @PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(converter.toResponseDto(
+                        service.atualizar(converter.requestDtoToEntity(requestDTO), id)));
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deletar(@PathVariable Long id) {
+        service.deletarPorId(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
