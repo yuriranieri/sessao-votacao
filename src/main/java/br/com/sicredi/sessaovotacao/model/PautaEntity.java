@@ -19,6 +19,7 @@ public class PautaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String assunto;
+    private String descricao;
 
     @OneToOne(mappedBy = "pauta")
     private SessaoEntity sessao;

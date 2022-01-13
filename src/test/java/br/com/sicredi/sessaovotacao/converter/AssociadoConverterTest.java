@@ -15,17 +15,17 @@ class AssociadoConverterTest {
     private AssociadoConverter converter;
 
     @Test
-    void quandoConverterRequestDtoToEntity() {
+    void quandoConverterRequestDtoToEntity_retornaSucesso() {
         assertEquals(criarAssociadoEntity().getCpf(), converter.requestDtoToEntity(criarAssociadoRequestDTO()).getCpf());
     }
 
     @Test
-    void quandoConverterToResponseDto() {
+    void quandoConverterToResponseDto_retornaSucesso() {
         assertEquals(criarAssociadoResponseDTO(), converter.toResponseDto(criarAssociadoEntity()));
     }
 
     @Test
-    void quandoConverterToListResponseDto() {
+    void quandoConverterToListResponseDto_retornaSucesso() {
         assertEquals(criarListAssociadoResponseDTO(), converter.toListResponseDto(criarListAssociadoEntity()));
     }
 }

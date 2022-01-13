@@ -3,13 +3,11 @@ package br.com.sicredi.sessaovotacao.converter;
 import br.com.sicredi.sessaovotacao.dto.AssociadoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.AssociadoResponseDTO;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Component
 public class AssociadoConverter {
 
