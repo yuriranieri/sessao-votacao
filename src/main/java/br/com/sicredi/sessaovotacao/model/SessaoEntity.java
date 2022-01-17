@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,12 +19,10 @@ public class SessaoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int tempoExpiracao;
+    private LocalDateTime dataInicio;
+    private LocalDateTime dataFinal;
 
-    @OneToMany(mappedBy = "sessao")
-    private List<AssociadoSessaoEntity> associadoSessaoEntities;
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_pauta", referencedColumnName = "id")
     private PautaEntity pauta;
 

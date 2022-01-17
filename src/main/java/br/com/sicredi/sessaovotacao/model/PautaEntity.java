@@ -21,7 +21,4 @@ public class PautaEntity {
     private String assunto;
     private String descricao;
 
-    @OneToOne(mappedBy = "pauta")
-    private SessaoEntity sessao;
-
 }

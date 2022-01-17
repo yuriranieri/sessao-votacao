@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AssociadoController.class)
 class AssociadoControllerTest {
 
-    public static final String URL = "/associados";
+    private static final String URL = "/associados";
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
     @MockBean

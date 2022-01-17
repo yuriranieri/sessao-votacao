@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(PautaController.class)
 class PautaControllerTest {
 
-    public static final String URL = "/pautas";
+    private static final String URL = "/pautas";
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
     @MockBean
