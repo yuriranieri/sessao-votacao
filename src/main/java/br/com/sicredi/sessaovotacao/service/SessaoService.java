@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,5 +26,9 @@ public class SessaoService {
     public SessaoEntity buscarPorId(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Sessao %d não encontrada", id)));
+    }
+
+    public Optional<SessaoEntity> buscarPorIdPauta(Long idPauta) {
+        return repository.findByPautaId(idPauta);
     }
 }

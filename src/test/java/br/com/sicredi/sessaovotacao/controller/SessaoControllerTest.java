@@ -97,4 +97,17 @@ class SessaoControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void quandoBuscarSessaoPorIdPauta_retornaSucesso() throws Exception {
+        Long id = anyLong();
+        when(business.buscarPorIdPauta(id))
+                .thenReturn(criarSessaoResponseDTO());
+
+        MockHttpServletRequestBuilder requestBuilder = get(URL.concat("/pautas/{id}"), id)
+                .contentType(APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
+    }
 }

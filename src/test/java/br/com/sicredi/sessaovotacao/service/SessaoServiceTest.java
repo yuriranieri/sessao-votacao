@@ -74,4 +74,17 @@ class SessaoServiceTest {
                 .isEqualTo(entity);
     }
 
+    @Test
+    void quandoBuscarSessaoPorIdPauta_retornaSucesso() {
+        Long id = anyLong();
+        Optional<SessaoEntity> entity = Optional.of(criarSessaoEntity());
+
+        when(repository.findByPautaId(id))
+                .thenReturn(entity);
+
+        assertThat(service.buscarPorIdPauta(id))
+                .isNotNull()
+                .isEqualTo(entity);
+    }
+
 }

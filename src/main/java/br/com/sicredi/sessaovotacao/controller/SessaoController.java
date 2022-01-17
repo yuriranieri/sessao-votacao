@@ -42,4 +42,11 @@ public class SessaoController {
                 .body(business.buscarPorId(id));
     }
 
+    @GetMapping(path = "/pautas/{idPauta}")
+    public ResponseEntity<SessaoResponseDTO> buscarPorIdPauta(@PathVariable Long idPauta) {
+        return ResponseEntity
+                .status(OK)
+                .body(business.buscarPorIdPauta(idPauta));
+    }
+
 }
