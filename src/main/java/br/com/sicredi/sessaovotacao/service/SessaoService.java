@@ -20,7 +20,7 @@ public class SessaoService {
     }
 
     public List<SessaoEntity> listar() {
-        return repository.findAll();
+        return repository.listarSessoes();
     }
 
     public SessaoEntity buscarPorId(Long id) {

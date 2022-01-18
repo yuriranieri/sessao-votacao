@@ -41,7 +41,7 @@ class SessaoServiceTest {
 
     @Test
     void quandoListarSessao_retornaSucesso() {
-        when(repository.findAll())
+        when(repository.listarSessoes())
                 .thenReturn(criarListSessaoEntity());
 
         assertThat(service.listar())

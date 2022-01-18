@@ -13,10 +13,10 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "AssociadoSessao")
-public class AssociadoSessaoEntity {
+public class VotoEntity {
 
     @EmbeddedId
-    private AssociadoSessaoPK id;
+    private VotoPK id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idAssociado")
