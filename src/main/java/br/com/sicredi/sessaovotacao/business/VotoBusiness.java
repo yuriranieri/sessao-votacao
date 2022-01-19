@@ -8,6 +8,7 @@ import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
 import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.model.VotoEntity;
+import br.com.sicredi.sessaovotacao.model.VotoPK;
 import br.com.sicredi.sessaovotacao.service.AssociadoService;
 import br.com.sicredi.sessaovotacao.service.SessaoService;
 import br.com.sicredi.sessaovotacao.service.VotoService;
@@ -35,6 +36,7 @@ public class VotoBusiness {
 
     public VotoResponseDTO salvar(VotoRequestDTO requestDTO) {
         VotoEntity entity = converter.requestDtoToEntity(requestDTO);
+        validaSeAssociadoVotouAnteriomente(requestDTO);
         entity.setAssociado(carregarAssociadoEntity(requestDTO.getIdAssociado()));
 
         SessaoEntity sessaoEntity = carregarSessaoEntity(requestDTO.getIdSessao());
@@ -42,6 +44,17 @@ public class VotoBusiness {
         entity.setSessao(sessaoEntity);
 
         return converter.toResponseDto(service.salvar(entity));
+    }
+
+    private void validaSeAssociadoVotouAnteriomente(VotoRequestDTO requestDTO) {
+        service.buscarPorId(new VotoPK(requestDTO.getIdAssociado(), requestDTO.getIdSessao()))
+                .ifPresent(voto -> {
+                    VotoPK id = voto.getId();
+                    throw new ErrorBusinessException(
+                            String.format("Associado %d já votou na sessão %d",
+                                    id.getIdAssociado(),
+                                    id.getIdSessao()));
+                });
     }
 
     public List<VotoResponseDTO> listar() {

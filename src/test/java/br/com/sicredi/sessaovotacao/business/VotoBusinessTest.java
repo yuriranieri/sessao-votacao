@@ -7,6 +7,7 @@ import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
 import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.model.VotoEntity;
+import br.com.sicredi.sessaovotacao.model.VotoPK;
 import br.com.sicredi.sessaovotacao.service.AssociadoService;
 import br.com.sicredi.sessaovotacao.service.SessaoService;
 import br.com.sicredi.sessaovotacao.service.VotoService;
@@ -19,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
@@ -51,6 +53,24 @@ class VotoBusinessTest {
     private SessaoService sessaoService;
 
     @Test
+    void quandoSalvarVoto_comAssociadoQueJaVoltou_retornaErro() {
+        VotoRequestDTO requestDTO = criarVotoRequestDTO();
+        VotoEntity entity = criarVotoEntity();
+        VotoPK votoPK = entity.getId();
+
+        when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
+                .thenReturn(entity);
+        when(service.buscarPorId(any(VotoPK.class)))
+                .thenReturn(Optional.of(entity));
+
+        assertThatThrownBy(() -> business.salvar(requestDTO))
+                .isInstanceOf(ErrorBusinessException.class)
+                .hasMessage(String.format("Associado %d já votou na sessão %d",
+                        votoPK.getIdAssociado(),
+                        votoPK.getIdSessao()));
+    }
+
+    @Test
     void quandoSalvarVoto_comAssociadoComStatusUnableToVote_retornaErro() {
         VotoRequestDTO requestDTO = criarVotoRequestDTO();
         VotoEntity entity = criarVotoEntity();
@@ -60,6 +80,8 @@ class VotoBusinessTest {
 
         when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
+        when(service.buscarPorId(any(VotoPK.class)))
+                .thenReturn(Optional.empty());
         when(associadoService.buscarPorId(anyLong()))
                 .thenReturn(associadoEntity);
         when(userClient.carregarEntidade(anyString()))
@@ -81,6 +103,8 @@ class VotoBusinessTest {
 
         when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
+        when(service.buscarPorId(any(VotoPK.class)))
+                .thenReturn(Optional.empty());
         when(associadoService.buscarPorId(anyLong()))
                 .thenReturn(criarAssociadoEntity());
         when(userClient.carregarEntidade(anyString()))
@@ -101,6 +125,8 @@ class VotoBusinessTest {
 
         when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
+        when(service.buscarPorId(any(VotoPK.class)))
+                .thenReturn(Optional.empty());
         when(associadoService.buscarPorId(anyLong()))
                 .thenReturn(criarAssociadoEntity());
         when(userClient.carregarEntidade(anyString()))

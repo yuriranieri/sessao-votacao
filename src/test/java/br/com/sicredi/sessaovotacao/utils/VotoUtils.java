@@ -27,7 +27,7 @@ public abstract class VotoUtils {
 
     public static VotoResponseDTO criarVotoResponseDTO() {
         return VotoResponseDTO.builder()
-                .id(new VotoPK(1L, 1L))
+                .id(criarVotoPK())
                 .voto("SIM")
                 .associado(criarAssociadoResponseDTO())
                 .sessao(criarSessaoResponseDTO())
@@ -36,11 +36,15 @@ public abstract class VotoUtils {
 
     public static VotoEntity criarVotoEntity() {
         return VotoEntity.builder()
-                .id(new VotoPK(1L, 1L))
+                .id(criarVotoPK())
                 .associado(criarAssociadoEntity())
                 .sessao(criarSessaoEntity())
                 .voto("SIM")
                 .build();
+    }
+
+    public static VotoPK criarVotoPK() {
+        return new VotoPK(1L, 1L);
     }
 
     public static UserDTO criarUserDTO() {
