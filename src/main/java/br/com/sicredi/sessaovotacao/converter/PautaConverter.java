@@ -6,7 +6,6 @@ import br.com.sicredi.sessaovotacao.model.PautaEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class PautaConverter {
@@ -29,7 +28,7 @@ public class PautaConverter {
     public List<PautaResponseDTO> toListResponseDto(List<PautaEntity> entities) {
         return entities.stream()
                 .map(this::toResponseDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

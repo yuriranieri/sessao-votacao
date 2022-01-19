@@ -66,7 +66,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         List<FieldMessage> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(err -> new FieldMessage(err.getDefaultMessage(), err.getField(), err.getRejectedValue()))
-                .collect(Collectors.toList());
+                .toList();
 
         ValidationError error = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
 
@@ -79,8 +79,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpStatus status,
                                                                   WebRequest request) {
         Throwable rootCause = ex.getRootCause();
-        if (rootCause instanceof InvalidFormatException) {
-            return handleInvalidFormatException((InvalidFormatException) rootCause, status);
+        if (rootCause instanceof InvalidFormatException invalidFormatException) {
+            return handleInvalidFormatException(invalidFormatException, status);
         }
 
         StandardError errorResponse = new StandardError(status.value(), ex.getLocalizedMessage());

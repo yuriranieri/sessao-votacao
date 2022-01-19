@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -39,7 +38,7 @@ public class SessaoConverter {
     public List<SessaoResponseDTO> toListResponseDto(List<SessaoEntity> entities) {
         return entities.stream()
                 .map(this::toResponseDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

@@ -6,7 +6,6 @@ import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class AssociadoConverter {
@@ -27,6 +26,6 @@ public class AssociadoConverter {
     public List<AssociadoResponseDTO> toListResponseDto(List<AssociadoEntity> entities) {
         return entities.stream()
                 .map(this::toResponseDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
