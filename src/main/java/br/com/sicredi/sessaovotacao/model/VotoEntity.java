@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Data
 @Builder
 @Entity
-@Table(name = "AssociadoSessao")
+@Table(name = "Voto")
 public class VotoEntity {
 
     @EmbeddedId

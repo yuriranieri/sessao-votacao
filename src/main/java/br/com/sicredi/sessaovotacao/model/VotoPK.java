@@ -14,10 +14,10 @@ import java.io.Serializable;
 @Embeddable
 public class VotoPK implements Serializable {
 
-    @Column(name = "idAssociado")
+    @Column(name = "id_associado")
     private Long idAssociado;
 
-    @Column(name = "idSessao")
+    @Column(name = "id_sessao")
     private Long idSessao;
 
 }
