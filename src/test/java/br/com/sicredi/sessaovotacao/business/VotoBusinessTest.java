@@ -24,11 +24,20 @@ import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
-import static br.com.sicredi.sessaovotacao.utils.VotoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarUserDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRelatorioDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoResponseDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -122,6 +131,9 @@ class VotoBusinessTest {
         VotoEntity entity = criarVotoEntity();
         UserDTO userDTO = criarUserDTO();
         VotoResponseDTO responseDTO = criarVotoResponseDTO();
+        SessaoEntity sessaoEntity = criarSessaoEntity();
+        sessaoEntity.setDataInicio(LocalDateTime.now());
+        sessaoEntity.setDataFinal(LocalDateTime.now().plusMinutes(5));
 
         when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
@@ -132,7 +144,7 @@ class VotoBusinessTest {
         when(userClient.carregarEntidade(anyString()))
                 .thenReturn(userDTO);
         when(sessaoService.buscarPorId(anyLong()))
-                .thenReturn(criarSessaoEntity());
+                .thenReturn(sessaoEntity);
         when(service.salvar(any(VotoEntity.class)))
                 .thenReturn(entity);
         when(converter.toResponseDto(any(VotoEntity.class)))

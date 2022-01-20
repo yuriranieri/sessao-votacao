@@ -13,7 +13,11 @@ import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEn
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
-import static br.com.sicredi.sessaovotacao.utils.VotoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoResponseDTO;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

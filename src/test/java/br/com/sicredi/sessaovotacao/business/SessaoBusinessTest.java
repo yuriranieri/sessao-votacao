@@ -16,10 +16,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntity;
-import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

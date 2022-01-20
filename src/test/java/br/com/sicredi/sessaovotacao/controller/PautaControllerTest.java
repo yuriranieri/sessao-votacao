@@ -12,11 +12,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import static br.com.sicredi.sessaovotacao.utils.PautaUtils.*;
-import static org.mockito.ArgumentMatchers.*;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaEntity;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntity;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaResponseDTO;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(PautaController.class)

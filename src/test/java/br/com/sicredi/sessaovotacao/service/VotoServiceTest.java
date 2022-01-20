@@ -11,7 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static br.com.sicredi.sessaovotacao.utils.VotoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoPK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;

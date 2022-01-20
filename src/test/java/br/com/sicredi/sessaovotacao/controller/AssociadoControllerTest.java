@@ -18,12 +18,21 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoResponseDTO;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AssociadoController.class)

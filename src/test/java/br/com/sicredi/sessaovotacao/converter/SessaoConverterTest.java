@@ -9,7 +9,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaResponseDTO;
-import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

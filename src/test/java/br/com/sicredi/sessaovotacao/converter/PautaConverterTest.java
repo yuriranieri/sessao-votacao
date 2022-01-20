@@ -6,7 +6,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.sicredi.sessaovotacao.utils.PautaUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaEntity;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntity;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaResponseDTO;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

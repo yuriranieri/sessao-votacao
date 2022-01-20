@@ -10,7 +10,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import static br.com.sicredi.sessaovotacao.utils.VotoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRelatorioDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoResponseDTO;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;

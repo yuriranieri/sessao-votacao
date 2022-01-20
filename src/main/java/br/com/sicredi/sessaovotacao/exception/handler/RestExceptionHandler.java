@@ -1,6 +1,10 @@
 package br.com.sicredi.sessaovotacao.exception.handler;
 
-import br.com.sicredi.sessaovotacao.exception.*;
+import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
+import br.com.sicredi.sessaovotacao.exception.FieldMessage;
+import br.com.sicredi.sessaovotacao.exception.NotFoundException;
+import br.com.sicredi.sessaovotacao.exception.StandardError;
+import br.com.sicredi.sessaovotacao.exception.ValidationError;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.beans.TypeMismatchException;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -28,6 +33,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String ERRO_DE_VALIDACAO = "Erro de validação";
 
     @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(NOT_FOUND)
     public ResponseEntity<Object> handleNotFoundException(NotFoundException ex) {
         HttpStatus status = NOT_FOUND;
         StandardError error = new StandardError(status.value(), ex.getMessage());
@@ -36,6 +42,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ErrorBusinessException.class)
+    @ResponseStatus(BAD_REQUEST)
     public ResponseEntity<Object> handleErrorNegocioException(ErrorBusinessException ex) {
         HttpStatus status = BAD_REQUEST;
         StandardError error = new StandardError(status.value(), ex.getMessage());

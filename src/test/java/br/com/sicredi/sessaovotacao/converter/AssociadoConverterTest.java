@@ -5,7 +5,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.*;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoRequestDTO;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoResponseDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)

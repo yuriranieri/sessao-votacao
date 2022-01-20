@@ -4,9 +4,16 @@ import br.com.sicredi.sessaovotacao.business.VotoBusiness;
 import br.com.sicredi.sessaovotacao.dto.VotoRelatorioDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -22,6 +29,7 @@ public class VotoController {
 
     private final VotoBusiness business;
 
+    @Operation(summary = "Cadastrar voto de um associado em uma sessão")
     @PostMapping
     public ResponseEntity<VotoResponseDTO> salvar(@RequestBody @Valid VotoRequestDTO requestDTO) {
         return ResponseEntity
@@ -29,6 +37,7 @@ public class VotoController {
                 .body(business.salvar(requestDTO));
     }
 
+    @Operation(summary = "Listar os votos")
     @GetMapping
     public ResponseEntity<List<VotoResponseDTO>> listar() {
         return ResponseEntity
@@ -36,6 +45,7 @@ public class VotoController {
                 .body(business.listar());
     }
 
+    @Operation(summary = "Listar os votos de uma sessão pelo idSessao")
     @GetMapping("/sessoes/{idSessao}")
     public ResponseEntity<List<VotoResponseDTO>> listarPorIdSessao(@PathVariable Long idSessao) {
         return ResponseEntity
@@ -43,6 +53,7 @@ public class VotoController {
                 .body(business.listarPorIdSessao(idSessao));
     }
 
+    @Operation(summary = "Carregar relatório de quantidade de votos (sim e não) de uma sessão")
     @GetMapping("/sessoes/{idSessao}/relatorio")
     public ResponseEntity<VotoRelatorioDTO> calcularVotosDaSessao(@PathVariable Long idSessao) {
         return ResponseEntity
