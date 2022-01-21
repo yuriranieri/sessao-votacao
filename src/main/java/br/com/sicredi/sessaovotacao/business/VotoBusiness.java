@@ -15,6 +15,7 @@ import br.com.sicredi.sessaovotacao.service.VotoService;
 import br.com.sicredi.sessaovotacao.userapi.client.UserClient;
 import br.com.sicredi.sessaovotacao.userapi.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ import java.util.Objects;
 import static br.com.sicredi.sessaovotacao.enumeration.VotoEnum.SIM;
 import static br.com.sicredi.sessaovotacao.userapi.dto.StatusEnum.UNABLE_TO_VOTE;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class VotoBusiness {
@@ -43,18 +45,8 @@ public class VotoBusiness {
         validarDataFimSessao(sessaoEntity.getDataFinal());
         entity.setSessao(sessaoEntity);
 
+        log.info("salvar - {}", entity);
         return converter.toResponseDto(service.salvar(entity));
-    }
-
-    private void validaSeAssociadoVotouAnteriomente(VotoRequestDTO requestDTO) {
-        service.buscarPorId(new VotoPK(requestDTO.getIdAssociado(), requestDTO.getIdSessao()))
-                .ifPresent(voto -> {
-                    VotoPK id = voto.getId();
-                    throw new ErrorBusinessException(
-                            String.format("Associado %d já votou na sessão %d",
-                                    id.getIdAssociado(),
-                                    id.getIdSessao()));
-                });
     }
 
     public List<VotoResponseDTO> listar() {
@@ -62,10 +54,12 @@ public class VotoBusiness {
     }
 
     public List<VotoResponseDTO> listarPorIdSessao(Long idSessao) {
+        log.info("listar por idSessao - {}", idSessao);
         return converter.toListResponseDto(service.listarPorIdSessao(idSessao));
     }
 
     public VotoRelatorioDTO calcularVotosDaSessao(Long idSessao) {
+        log.info("calcular votos da sessao por idSessao - {}", idSessao);
         SessaoEntity sessaoEntity = carregarSessaoEntity(idSessao);
 
         if (hojeNaoForDepoisDataFimSessao(sessaoEntity.getDataFinal())) {
@@ -81,16 +75,31 @@ public class VotoBusiness {
         return new VotoRelatorioDTO(quantidadeVotosSim, quantidadeVotosNao);
     }
 
+    private void validaSeAssociadoVotouAnteriomente(VotoRequestDTO requestDTO) {
+        service.buscarPorId(new VotoPK(requestDTO.getIdAssociado(), requestDTO.getIdSessao()))
+                .ifPresent(voto -> {
+                    VotoPK id = voto.getId();
+                    throw new ErrorBusinessException(
+                            String.format("Associado %d já votou na sessão %d",
+                                    id.getIdAssociado(),
+                                    id.getIdSessao()));
+                });
+    }
+
     private AssociadoEntity carregarAssociadoEntity(Long idAssociado) {
         AssociadoEntity associadoEntity = associadoService.buscarPorId(idAssociado);
         UserDTO userDTO = userClient.carregarEntidade(associadoEntity.getCpf());
 
-        if (Objects.equals(userDTO.getStatus(), UNABLE_TO_VOTE.getDescricao())) {
+        if (associadoNaoPuderVotar(userDTO)) {
             throw new ErrorBusinessException(
                     String.format("Associado com o cpf %s não pode votar", associadoEntity.getCpf()));
         }
 
         return associadoEntity;
+    }
+
+    private boolean associadoNaoPuderVotar(UserDTO userDTO) {
+        return Objects.equals(userDTO.getStatus(), UNABLE_TO_VOTE.getDescricao());
     }
 
     private SessaoEntity carregarSessaoEntity(Long idSessao) {

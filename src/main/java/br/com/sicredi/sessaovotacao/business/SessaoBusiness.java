@@ -9,12 +9,14 @@ import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.service.PautaService;
 import br.com.sicredi.sessaovotacao.service.SessaoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class SessaoBusiness {
@@ -33,6 +35,7 @@ public class SessaoBusiness {
         entity.setDataFinal(calculaDataFinal(dateTimeNow, requestDTO.getTempoExpiracaoEmMinutos()));
         entity.setPauta(getPauta(idPauta));
 
+        log.info("salvar - {}", entity);
         return converter.toResponseDto(service.salvar(entity));
     }
 
@@ -41,10 +44,12 @@ public class SessaoBusiness {
     }
 
     public SessaoResponseDTO buscarPorId(Long id) {
+        log.info("buscar por id - {}", id);
         return converter.toResponseDto(service.buscarPorId(id));
     }
 
     public SessaoResponseDTO buscarPorIdPauta(Long idPauta) {
+        log.info("buscar por idPauta - {}", idPauta);
         SessaoEntity entity = getSessaoEntityPorPauta(idPauta)
                 .orElseThrow(() -> new ErrorBusinessException(
                         String.format("Não existe sessão para a pauta %d", idPauta)));

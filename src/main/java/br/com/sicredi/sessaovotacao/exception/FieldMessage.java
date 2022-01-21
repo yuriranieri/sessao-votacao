@@ -2,8 +2,10 @@ package br.com.sicredi.sessaovotacao.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @Getter
+@ToString
 @RequiredArgsConstructor
 public class FieldMessage {
 

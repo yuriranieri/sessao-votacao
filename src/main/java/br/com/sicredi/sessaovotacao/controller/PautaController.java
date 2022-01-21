@@ -6,6 +6,7 @@ import br.com.sicredi.sessaovotacao.dto.PautaResponseDTO;
 import br.com.sicredi.sessaovotacao.service.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @CrossOrigin("*")
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/pautas")
@@ -35,6 +37,7 @@ public class PautaController {
     @Operation(summary = "Cadastrar pauta")
     @PostMapping
     public ResponseEntity<PautaResponseDTO> salvar(@RequestBody @Valid PautaRequestDTO requestDTO) {
+        log.info("salvar - {}", requestDTO);
         return ResponseEntity
                 .status(CREATED)
                 .body(converter.toResponseDto(
@@ -44,6 +47,7 @@ public class PautaController {
     @Operation(summary = "Listar pautas")
     @GetMapping
     public ResponseEntity<List<PautaResponseDTO>> listar() {
+        log.info("listar");
         return ResponseEntity
                 .status(OK)
                 .body(converter.toListResponseDto(service.listar()));
@@ -52,6 +56,7 @@ public class PautaController {
     @Operation(summary = "Buscar pauta pelo id")
     @GetMapping(path = "/{id}")
     public ResponseEntity<PautaResponseDTO> buscarPorId(@PathVariable Long id) {
+        log.info("buscar por id - {}", id);
         return ResponseEntity
                 .status(OK)
                 .body(converter.toResponseDto(service.buscarPorId(id)));
@@ -61,6 +66,7 @@ public class PautaController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<PautaResponseDTO> atualizar(@RequestBody @Valid PautaRequestDTO requestDTO,
                                                       @PathVariable Long id) {
+        log.info("atualizar por id - {} {}", requestDTO, id);
         return ResponseEntity
                 .status(OK)
                 .body(converter.toResponseDto(
@@ -70,6 +76,7 @@ public class PautaController {
     @Operation(summary = "Deletar pauta pelo id")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity deletar(@PathVariable Long id) {
+        log.info("deletar por id - {}", id);
         service.deletarPorId(id);
         return ResponseEntity.noContent().build();
     }

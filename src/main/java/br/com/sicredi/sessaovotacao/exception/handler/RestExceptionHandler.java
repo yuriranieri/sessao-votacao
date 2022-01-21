@@ -7,6 +7,7 @@ import br.com.sicredi.sessaovotacao.exception.StandardError;
 import br.com.sicredi.sessaovotacao.exception.ValidationError;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ import static java.util.Collections.singletonList;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@Slf4j
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -38,6 +40,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status = NOT_FOUND;
         StandardError error = new StandardError(status.value(), ex.getMessage());
 
+        log.error("{}", error.getMessage());
         return ResponseEntity.status(status).body(error);
     }
 
@@ -47,6 +50,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status = BAD_REQUEST;
         StandardError error = new StandardError(status.value(), ex.getMessage());
 
+        log.error("{}", error.getMessage());
         return ResponseEntity.status(status).body(error);
     }
 
@@ -62,6 +66,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         StandardError error = new StandardError(status.value(), msg);
 
+        log.error("{}", error.getMessage());
         return ResponseEntity.status(status).body(error);
     }
 
@@ -74,9 +79,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         List<FieldMessage> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(err -> new FieldMessage(err.getDefaultMessage(), err.getField(), err.getRejectedValue()))
                 .toList();
-
         ValidationError error = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
 
+        log.error("{}", errors);
         return ResponseEntity.status(BAD_REQUEST).body(error);
     }
 
@@ -86,12 +91,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpStatus status,
                                                                   WebRequest request) {
         Throwable rootCause = ex.getRootCause();
+
         if (rootCause instanceof InvalidFormatException invalidFormatException) {
             return handleInvalidFormatException(invalidFormatException, status);
         }
 
-        StandardError errorResponse = new StandardError(status.value(), ex.getLocalizedMessage());
-        return ResponseEntity.status(status).body(errorResponse);
+        StandardError error = new StandardError(status.value(), ex.getLocalizedMessage());
+        log.error("{}", error.getMessage());
+        return ResponseEntity.status(status).body(error);
     }
 
     private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex, HttpStatus status) {
@@ -104,9 +111,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 fieldName, ex.getTargetType().getSimpleName(), ex.getValue(), ex.getValue().getClass().getSimpleName());
 
         List<FieldMessage> errors = singletonList(new FieldMessage(msg, fieldName, ex.getValue()));
-        ValidationError errorResponse = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
+        ValidationError error = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
 
-        return ResponseEntity.status(status).body(errorResponse);
+        log.error("{}", errors);
+        return ResponseEntity.status(status).body(error);
     }
 
 }
