@@ -1,4 +1,5 @@
 # sessao-votacao
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=yuriranieri_sessao-votacao&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=yuriranieri_sessao-votacao)
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/yuriranieri/sessao-votacao/blob/master/LICENSE)
 
 ## 📝 Sobre:
