@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -78,7 +79,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         List<FieldMessage> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(err -> new FieldMessage(err.getDefaultMessage(), err.getField(), err.getRejectedValue()))
-                .toList();
+                .collect(toList());
         ValidationError error = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
 
         log.error("{}", errors);
@@ -92,8 +93,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   WebRequest request) {
         Throwable rootCause = ex.getRootCause();
 
-        if (rootCause instanceof InvalidFormatException invalidFormatException) {
-            return handleInvalidFormatException(invalidFormatException, status);
+        if (rootCause instanceof InvalidFormatException) {
+            return handleInvalidFormatException((InvalidFormatException) rootCause, status);
         }
 
         StandardError error = new StandardError(status.value(), ex.getLocalizedMessage());

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class PautaConverter {
 
@@ -28,7 +30,7 @@ public class PautaConverter {
     public List<PautaResponseDTO> toListResponseDto(List<PautaEntity> entities) {
         return entities.stream()
                 .map(this::toResponseDto)
-                .toList();
+                .collect(toList());
     }
 
 }

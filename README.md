@@ -14,7 +14,7 @@ O projeto **sessao-votacao** possui o objetivo de gerenciar votações de associ
 
 ## 🔨 Tecnologias utilizadas:
 
-- Java 17
+- Java 11
 - PostgreSQL
 - Spring Boot
 - Spring Data JPA
@@ -30,7 +30,7 @@ O projeto **sessao-votacao** possui o objetivo de gerenciar votações de associ
 
 ### Pré-requisitos:
 
-- Java Versão 17 (LTS) - [Baixar OpenJDK](https://jdk.java.net/archive/)
+- Java Versão 11 - [Baixar OpenJDK](https://jdk.java.net/archive/)
 - PostgreSQL Versão 14 - [Baixar PostgreSQL](https://www.postgresql.org/download/)
 - Criação do banco de dados e suas tabelas:
   ```bash

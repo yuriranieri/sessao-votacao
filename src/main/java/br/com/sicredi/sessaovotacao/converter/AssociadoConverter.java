@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class AssociadoConverter {
 
@@ -26,6 +28,6 @@ public class AssociadoConverter {
     public List<AssociadoResponseDTO> toListResponseDto(List<AssociadoEntity> entities) {
         return entities.stream()
                 .map(this::toResponseDto)
-                .toList();
+                .collect(toList());
     }
 }

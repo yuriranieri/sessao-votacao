@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 @Component
 public class VotoConverter {
@@ -50,6 +52,6 @@ public class VotoConverter {
     public List<VotoResponseDTO> toListResponseDto(List<VotoEntity> entities) {
         return entities.stream()
                 .map(this::toResponseDto)
-                .toList();
+                .collect(toList());
     }
 }
