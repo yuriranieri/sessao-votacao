@@ -182,6 +182,20 @@ class VotoBusinessTest {
     }
 
     @Test
+    void quandoListarVotoPorIdAssociado_retornaSucesso() {
+        Long idSessao = anyLong();
+
+        when(service.listarPorIdAssociado(idSessao))
+                .thenReturn(criarListVotoEntity());
+        when(converter.toListResponseDto(anyList()))
+                .thenReturn(criarListVotoResponseDTO());
+
+        assertThat(business.listarPorIdAssociado(idSessao))
+                .isNotNull()
+                .hasSize(1);
+    }
+
+    @Test
     void quandoCalcularVotosDaSessao_comSessaoEmAndamento_retornaErro() {
         Long idSessao = anyLong();
         SessaoEntity sessaoEntity = criarSessaoEntity();

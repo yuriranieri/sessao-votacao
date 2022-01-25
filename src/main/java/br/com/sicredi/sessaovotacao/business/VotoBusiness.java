@@ -58,6 +58,11 @@ public class VotoBusiness {
         return converter.toListResponseDto(service.listarPorIdSessao(idSessao));
     }
 
+    public List<VotoResponseDTO> listarPorIdAssociado(Long idAssociado) {
+        log.info("listar por idAssociado - {}", idAssociado);
+        return converter.toListResponseDto(service.listarPorIdAssociado(idAssociado));
+    }
+
     public VotoRelatorioDTO calcularVotosDaSessao(Long idSessao) {
         log.info("calcular votos da sessao por idSessao - {}", idSessao);
         SessaoEntity sessaoEntity = carregarSessaoEntity(idSessao);

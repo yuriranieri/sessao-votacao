@@ -35,4 +35,9 @@ public class VotoService {
         log.info("buscar por id - {}", id);
         return repository.findById(id);
     }
+
+    public List<VotoEntity> listarPorIdAssociado(Long idAssociado) {
+        log.info("buscar por idAssociado - {}", idAssociado);
+        return repository.listarPorIdAssociado(idAssociado);
+    }
 }

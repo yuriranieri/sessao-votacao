@@ -24,4 +24,10 @@ public interface VotoRepository extends JpaRepository<VotoEntity, VotoPK> {
             "where v.sessao.id = :idSessao")
     List<VotoEntity> listarPorIdSessao(Long idSessao);
 
+    @Query("from VotoEntity v " +
+            "join fetch v.associado " +
+            "join fetch v.sessao s " +
+            "join fetch s.pauta " +
+            "where v.associado.id = :idAssociado")
+    List<VotoEntity> listarPorIdAssociado(Long idAssociado);
 }

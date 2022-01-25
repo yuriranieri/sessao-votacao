@@ -73,4 +73,16 @@ class VotoServiceTest {
                 .isNotNull()
                 .isEqualTo(entity);
     }
+
+    @Test
+    void quandoListarVotoPorIdAssociado_retornaSucesso() {
+        Long idSessao = anyLong();
+
+        when(repository.listarPorIdAssociado(idSessao))
+                .thenReturn(criarListVotoEntity());
+
+        assertThat(service.listarPorIdAssociado(idSessao))
+                .isNotNull()
+                .hasSize(1);
+    }
 }
