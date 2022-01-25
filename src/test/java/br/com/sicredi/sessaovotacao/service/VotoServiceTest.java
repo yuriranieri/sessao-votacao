@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntityNoArgs;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoPK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,7 +32,7 @@ class VotoServiceTest {
 
     @Test
     void quandoSalvarVoto_retornaSucesso() {
-        VotoEntity entity = criarVotoEntity();
+        VotoEntity entity = criarVotoEntityNoArgs();
 
         when(repository.save(any(VotoEntity.class)))
                 .thenReturn(entity);

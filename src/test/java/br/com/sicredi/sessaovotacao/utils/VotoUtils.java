@@ -10,8 +10,10 @@ import br.com.sicredi.sessaovotacao.userapi.dto.UserDTO;
 import java.util.List;
 
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntityNoArgs;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntityNoArgs;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
 import static java.util.Collections.singletonList;
 
@@ -43,8 +45,24 @@ public abstract class VotoUtils {
                 .build();
     }
 
+    public static VotoEntity criarVotoEntityNoArgs() {
+        VotoEntity entity = new VotoEntity();
+        entity.setId(criarVotoPkNoArgs());
+        entity.setAssociado(criarAssociadoEntityNoArgs());
+        entity.setSessao(criarSessaoEntityNoArgs());
+        entity.setVoto("SIM");
+        return entity;
+    }
+
     public static VotoPK criarVotoPK() {
         return new VotoPK(1L, 1L);
+    }
+
+    public static VotoPK criarVotoPkNoArgs() {
+        VotoPK pk = new VotoPK();
+        pk.setIdAssociado(1L);
+        pk.setIdSessao(1L);
+        return pk;
     }
 
     public static UserDTO criarUserDTO() {

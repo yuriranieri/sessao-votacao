@@ -30,6 +30,13 @@ public abstract class AssociadoUtils {
                 .build();
     }
 
+    public static AssociadoEntity criarAssociadoEntityNoArgs() {
+        AssociadoEntity entity = new AssociadoEntity();
+        entity.setId(1L);
+        entity.setCpf("22095519000");
+        return entity;
+    }
+
     public static List<AssociadoEntity> criarListAssociadoEntity() {
         return singletonList(criarAssociadoEntity());
     }

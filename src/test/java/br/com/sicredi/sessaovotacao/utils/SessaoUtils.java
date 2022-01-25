@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntity;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntityNoArgs;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaResponseDTO;
 import static java.util.Collections.singletonList;
 
@@ -41,6 +42,16 @@ public abstract class SessaoUtils {
                 .dataFinal(dataInicio.plusMinutes(1))
                 .pauta(criarPautaEntity())
                 .build();
+    }
+
+    public static SessaoEntity criarSessaoEntityNoArgs() {
+        LocalDateTime dataInicio = LocalDateTime.of(LocalDate.now(), LocalTime.of(17, 10));
+        SessaoEntity entity = new SessaoEntity();
+        entity.setId(1L);
+        entity.setDataInicio(dataInicio);
+        entity.setDataFinal(dataInicio.plusMinutes(1));
+        entity.setPauta(criarPautaEntityNoArgs());
+        return entity;
     }
 
     public static List<SessaoResponseDTO> criarListSessaoResponseDTO() {

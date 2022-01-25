@@ -3,15 +3,19 @@ package br.com.sicredi.sessaovotacao.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 public class SessaoRequestDTO {
 
     @NotNull(message = "tempo_expiracao_em_minutos é um campo obrigatório")

@@ -33,6 +33,14 @@ public abstract class PautaUtils {
                 .build();
     }
 
+    public static PautaEntity criarPautaEntityNoArgs() {
+        PautaEntity entity = new PautaEntity();
+        entity.setId(1L);
+        entity.setAssunto("teste");
+        entity.setDescricao("descricao teste");
+        return entity;
+    }
+
     public static List<PautaResponseDTO> criarListPautaResponseDTO() {
         return singletonList(criarPautaResponseDTO());
     }
