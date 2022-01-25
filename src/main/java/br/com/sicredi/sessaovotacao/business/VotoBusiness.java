@@ -38,7 +38,7 @@ public class VotoBusiness {
 
     public VotoResponseDTO salvar(VotoRequestDTO requestDTO) {
         VotoEntity entity = converter.requestDtoToEntity(requestDTO);
-        validaSeAssociadoVotouAnteriomente(requestDTO);
+        validaSeAssociadoVotouAnteriomente(requestDTO.getIdAssociado(), requestDTO.getIdSessao());
         entity.setAssociado(carregarAssociadoEntity(requestDTO.getIdAssociado()));
 
         SessaoEntity sessaoEntity = carregarSessaoEntity(requestDTO.getIdSessao());
@@ -75,8 +75,8 @@ public class VotoBusiness {
         return new VotoRelatorioDTO(quantidadeVotosSim, quantidadeVotosNao);
     }
 
-    private void validaSeAssociadoVotouAnteriomente(VotoRequestDTO requestDTO) {
-        service.buscarPorId(new VotoPK(requestDTO.getIdAssociado(), requestDTO.getIdSessao()))
+    private void validaSeAssociadoVotouAnteriomente(Long idAssociado, Long idSessao) {
+        service.buscarPorId(new VotoPK(idAssociado, idSessao))
                 .ifPresent(voto -> {
                     VotoPK id = voto.getId();
                     throw new ErrorBusinessException(
