@@ -26,8 +26,23 @@ class UserClientTest {
     private ValuesConfig valuesConfig;
 
     @Test
-    void quandoCarregarEntidade_retornaSucesso() {
+    void quandoCarregarEntidade_retornaSucessoAbleToVote() {
         UserDTO userDTO = criarUserDTO();
+
+        when(valuesConfig.getUrlUser())
+                .thenReturn("localhost");
+        when(rest.getForObject("localhost/31426540035", UserDTO.class))
+                .thenReturn(userDTO);
+
+        assertThat(client.carregarEntidade("31426540035"))
+                .isNotNull()
+                .isEqualTo(userDTO);
+    }
+
+    @Test
+    void quandoCarregarEntidade_retornaSucessoUnableToVote() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setStatus("UNABLE_TO_VOTE");
 
         when(valuesConfig.getUrlUser())
                 .thenReturn("localhost");

@@ -16,7 +16,7 @@ public class SessaoRequestDTO {
 
     @NotNull(message = "tempo_expiracao_em_minutos é um campo obrigatório")
     @JsonProperty(value = "tempo_expiracao_em_minutos")
-    private int tempoExpiracaoEmMinutos;
+    private Integer tempoExpiracaoEmMinutos;
 
     @NotNull(message = "id_pauta é um campo obrigatório")
     @JsonProperty(value = "id_pauta")

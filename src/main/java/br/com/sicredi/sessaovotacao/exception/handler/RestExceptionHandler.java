@@ -82,7 +82,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .collect(toList());
         ValidationError error = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
 
-        log.error("{}", errors);
+        log.error("{}", error.getErrors());
         return ResponseEntity.status(BAD_REQUEST).body(error);
     }
 
@@ -114,7 +114,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         List<FieldMessage> errors = singletonList(new FieldMessage(msg, fieldName, ex.getValue()));
         ValidationError error = new ValidationError(status.value(), ERRO_DE_VALIDACAO, errors);
 
-        log.error("{}", errors);
+        log.error("{}", error.getErrors());
         return ResponseEntity.status(status).body(error);
     }
 
