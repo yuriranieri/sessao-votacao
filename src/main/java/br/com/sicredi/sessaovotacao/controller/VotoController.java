@@ -61,12 +61,15 @@ public class VotoController {
     }
 
     @Operation(summary = "Listar os votos de um associado pelo idAssociado")
-    @GetMapping("/associado/{idAssociado}")
-    public ResponseEntity<List<VotoResponseDTO>> listarPorIdAssociado(@PathVariable Long idAssociado) {
+    @GetMapping("/associados/{idAssociado}")
+    public ResponseEntity<Page<VotoResponseDTO>> listarPorIdAssociado(
+            @RequestParam int page,
+            @RequestParam int size,
+            @PathVariable Long idAssociado) {
         log.info("listar por idAssociado - {}", idAssociado);
         return ResponseEntity
                 .status(OK)
-                .body(business.listarPorIdAssociado(idAssociado));
+                .body(business.listarPorIdAssociado(idAssociado, PageRequest.of(page, size, ASC, "id")));
     }
 
     @Operation(summary = "Carregar relatório de quantidade de votos (sim e não) de uma sessão")

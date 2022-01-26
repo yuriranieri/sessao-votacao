@@ -17,7 +17,6 @@ import br.com.sicredi.sessaovotacao.userapi.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -61,9 +60,9 @@ public class VotoBusiness {
         return converter.toListResponseDto(service.listarPorIdSessao(idSessao));
     }
 
-    public List<VotoResponseDTO> listarPorIdAssociado(Long idAssociado) {
+    public Page<VotoResponseDTO> listarPorIdAssociado(Long idAssociado, Pageable pageable) {
         log.info("listar por idAssociado - {}", idAssociado);
-        return converter.toListResponseDto(service.listarPorIdAssociado(idAssociado));
+        return converter.toPageResponseDto(service.listarPorIdAssociado(idAssociado, pageable));
     }
 
     public VotoRelatorioDTO calcularVotosDaSessao(Long idSessao) {

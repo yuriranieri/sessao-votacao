@@ -38,8 +38,8 @@ public class VotoService {
         return repository.findById(id);
     }
 
-    public List<VotoEntity> listarPorIdAssociado(Long idAssociado) {
+    public Page<VotoEntity> listarPorIdAssociado(Long idAssociado, Pageable pageable) {
         log.info("buscar por idAssociado - {}", idAssociado);
-        return repository.listarPorIdAssociado(idAssociado);
+        return repository.listarPorIdAssociado(idAssociado, pageable);
     }
 }

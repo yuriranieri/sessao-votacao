@@ -188,12 +188,12 @@ class VotoBusinessTest {
     void quandoListarVotoPorIdAssociado_retornaSucesso() {
         Long idSessao = anyLong();
 
-        when(service.listarPorIdAssociado(idSessao))
-                .thenReturn(criarListVotoEntity());
-        when(converter.toListResponseDto(anyList()))
-                .thenReturn(criarListVotoResponseDTO());
+        when(service.listarPorIdAssociado(idSessao, any()))
+                .thenReturn(criarPageVotoEntity());
+        when(converter.toPageResponseDto(any()))
+                .thenReturn(criarPageVotoResponseDTO());
 
-        assertThat(business.listarPorIdAssociado(idSessao))
+        assertThat(business.listarPorIdAssociado(idSessao, getPageable()))
                 .isNotNull()
                 .hasSize(1);
     }

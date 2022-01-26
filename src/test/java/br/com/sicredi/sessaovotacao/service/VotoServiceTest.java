@@ -80,10 +80,10 @@ class VotoServiceTest {
     void quandoListarVotoPorIdAssociado_retornaSucesso() {
         Long idSessao = anyLong();
 
-        when(repository.listarPorIdAssociado(idSessao))
-                .thenReturn(criarListVotoEntity());
+        when(repository.listarPorIdAssociado(idSessao, any()))
+                .thenReturn(criarPageVotoEntity());
 
-        assertThat(service.listarPorIdAssociado(idSessao))
+        assertThat(service.listarPorIdAssociado(idSessao, getPageable()))
                 .isNotNull()
                 .hasSize(1);
     }

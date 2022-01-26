@@ -96,11 +96,13 @@ class VotoControllerTest {
     void quandoListarVotosPorIdAssociado_retornaSucesso() throws Exception {
         Long idAssociado = anyLong();
 
-        when(business.listarPorIdAssociado(idAssociado))
-                .thenReturn(criarListVotoResponseDTO());
+        when(business.listarPorIdAssociado(idAssociado, any()))
+                .thenReturn(criarPageVotoResponseDTO());
 
-        MockHttpServletRequestBuilder requestBuilder = get(URL.concat("/associado/{idAssociado}"), idAssociado)
-                .contentType(APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = get(URL.concat("/associados/{idAssociado}"), idAssociado)
+                .contentType(APPLICATION_JSON)
+                .param("page", "0")
+                .param("size", "1");
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());
