@@ -8,11 +8,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarPageAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,9 +47,10 @@ class AssociadoServiceTest {
 
     @Test
     void quandoListarAssociado_retornaSucesso() {
-        when(repository.findAll())
-                .thenReturn(criarListAssociadoEntity());
-        assertThat(service.listar())
+        Pageable pageable = getPageable();
+        when(repository.findAll(pageable))
+                .thenReturn(criarPageAssociadoEntity());
+        assertThat(service.listar(pageable))
                 .isNotNull()
                 .hasSize(1);
     }

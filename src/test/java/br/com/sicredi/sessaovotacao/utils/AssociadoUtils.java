@@ -3,9 +3,12 @@ package br.com.sicredi.sessaovotacao.utils;
 import br.com.sicredi.sessaovotacao.dto.AssociadoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.AssociadoResponseDTO;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static java.util.Collections.singletonList;
 
 public abstract class AssociadoUtils {
@@ -43,6 +46,14 @@ public abstract class AssociadoUtils {
 
     public static List<AssociadoResponseDTO> criarListAssociadoResponseDTO() {
         return singletonList(criarAssociadoResponseDTO());
+    }
+
+    public static Page<AssociadoEntity> criarPageAssociadoEntity() {
+        return new PageImpl<>(criarListAssociadoEntity(), getPageable(), 1L);
+    }
+
+    public static Page<AssociadoResponseDTO> criarPageAssociadoResponseDTO() {
+        return new PageImpl<>(criarListAssociadoResponseDTO(), getPageable(), 1L);
     }
 
 }

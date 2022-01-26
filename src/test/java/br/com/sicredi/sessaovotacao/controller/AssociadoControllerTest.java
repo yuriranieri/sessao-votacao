@@ -21,11 +21,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoResponseDTO;
-import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoEntity;
-import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarPageAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarPageAssociadoResponseDTO;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -125,13 +124,16 @@ class AssociadoControllerTest {
 
     @Test
     void quandoListar_retornaSucesso() throws Exception {
-        when(service.listar())
-                .thenReturn(criarListAssociadoEntity());
-        when(converter.toListResponseDto(anyList()))
-                .thenReturn(criarListAssociadoResponseDTO());
+        when(service.listar(any()))
+                .thenReturn(criarPageAssociadoEntity());
+        when(converter.toPageResponseDto(any()))
+                .thenReturn(criarPageAssociadoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL)
-                .contentType(APPLICATION_JSON);
+                .contentType(APPLICATION_JSON)
+                .param("page", "0")
+                .param("size", "1");
+        ;
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());

@@ -5,6 +5,8 @@ import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
 import br.com.sicredi.sessaovotacao.repository.AssociadoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class AssociadoService {
         return repository.save(entity);
     }
 
-    public List<AssociadoEntity> listar() {
-        return repository.findAll();
+    public Page<AssociadoEntity> listar(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public AssociadoEntity buscarPorId(Long id) {

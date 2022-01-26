@@ -8,8 +8,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoResponseDTO;
-import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoEntity;
-import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarPageAssociadoEntity;
+import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarPageAssociadoResponseDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +29,7 @@ class AssociadoConverterTest {
     }
 
     @Test
-    void quandoConverterToListResponseDto_retornaSucesso() {
-        assertEquals(criarListAssociadoResponseDTO(), converter.toListResponseDto(criarListAssociadoEntity()));
+    void quandoConverterToPageResponseDto_retornaSucesso() {
+        assertEquals(criarPageAssociadoResponseDTO(), converter.toPageResponseDto(criarPageAssociadoEntity()));
     }
 }

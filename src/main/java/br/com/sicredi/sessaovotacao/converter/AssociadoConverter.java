@@ -3,11 +3,8 @@ package br.com.sicredi.sessaovotacao.converter;
 import br.com.sicredi.sessaovotacao.dto.AssociadoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.AssociadoResponseDTO;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Component
 public class AssociadoConverter {
@@ -25,9 +22,7 @@ public class AssociadoConverter {
                 .build();
     }
 
-    public List<AssociadoResponseDTO> toListResponseDto(List<AssociadoEntity> entities) {
-        return entities.stream()
-                .map(this::toResponseDto)
-                .collect(toList());
+    public Page<AssociadoResponseDTO> toPageResponseDto(Page<AssociadoEntity> entities) {
+        return entities.map(this::toResponseDto);
     }
 }
