@@ -6,8 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaEntity;
-import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPagePautaEntity;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPagePautaResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntity;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaResponseDTO;
@@ -37,7 +37,7 @@ class PautaConverterTest {
     }
 
     @Test
-    void quandoConverterToListResponseDto_retornaSucesso() {
-        assertEquals(criarListPautaResponseDTO(), converter.toListResponseDto(criarListPautaEntity()));
+    void quandoConverterToPageResponseDto_retornaSucesso() {
+        assertEquals(criarPagePautaResponseDTO(), converter.toPageResponseDto(criarPagePautaEntity()));
     }
 }

@@ -3,11 +3,8 @@ package br.com.sicredi.sessaovotacao.converter;
 import br.com.sicredi.sessaovotacao.dto.PautaRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.PautaResponseDTO;
 import br.com.sicredi.sessaovotacao.model.PautaEntity;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Component
 public class PautaConverter {
@@ -27,10 +24,7 @@ public class PautaConverter {
                 .build();
     }
 
-    public List<PautaResponseDTO> toListResponseDto(List<PautaEntity> entities) {
-        return entities.stream()
-                .map(this::toResponseDto)
-                .collect(toList());
+    public Page<PautaResponseDTO> toPageResponseDto(Page<PautaEntity> entities) {
+        return entities.map(this::toResponseDto);
     }
-
 }

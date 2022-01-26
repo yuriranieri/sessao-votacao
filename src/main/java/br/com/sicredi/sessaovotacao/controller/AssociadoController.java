@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.http.HttpStatus.CREATED;

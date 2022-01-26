@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEntity;
-import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarListAssociadoEntity;
 import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarPageAssociadoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static org.assertj.core.api.Assertions.assertThat;

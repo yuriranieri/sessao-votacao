@@ -133,7 +133,6 @@ class AssociadoControllerTest {
                 .contentType(APPLICATION_JSON)
                 .param("page", "0")
                 .param("size", "1");
-        ;
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());

@@ -12,13 +12,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaEntity;
-import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarListPautaResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPagePautaEntity;
+import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPagePautaResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntity;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaResponseDTO;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -64,13 +63,15 @@ class PautaControllerTest {
 
     @Test
     void quandoListarPauta_retornaSucesso() throws Exception {
-        when(service.listar())
-                .thenReturn(criarListPautaEntity());
-        when(converter.toListResponseDto(anyList()))
-                .thenReturn(criarListPautaResponseDTO());
+        when(service.listar(any()))
+                .thenReturn(criarPagePautaEntity());
+        when(converter.toPageResponseDto(any()))
+                .thenReturn(criarPagePautaResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL)
-                .contentType(APPLICATION_JSON);
+                .contentType(APPLICATION_JSON)
+                .param("page", "0")
+                .param("size", "1");
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());

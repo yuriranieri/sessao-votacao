@@ -5,9 +5,9 @@ import br.com.sicredi.sessaovotacao.model.PautaEntity;
 import br.com.sicredi.sessaovotacao.repository.PautaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -21,8 +21,8 @@ public class PautaService {
         return repository.save(entity);
     }
 
-    public List<PautaEntity> listar() {
-        return repository.findAll();
+    public Page<PautaEntity> listar(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public PautaEntity buscarPorId(Long id) {
