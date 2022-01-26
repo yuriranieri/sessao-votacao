@@ -5,6 +5,8 @@ import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.repository.SessaoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class SessaoService {
         return repository.save(entity);
     }
 
-    public List<SessaoEntity> listar() {
-        return repository.listarSessoes();
+    public Page<SessaoEntity> listar(Pageable pageable) {
+        return repository.listarSessoes(pageable);
     }
 
     public SessaoEntity buscarPorId(Long id) {

@@ -16,15 +16,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaEntity;
-import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoEntity;
-import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarPageSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarPageSessaoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -82,12 +82,12 @@ class SessaoBusinessTest {
 
     @Test
     void quandoListarSessao_retornaSucesso() {
-        when(service.listar())
-                .thenReturn(criarListSessaoEntity());
-        when(converter.toListResponseDto(anyList()))
-                .thenReturn(criarListSessaoResponseDTO());
+        when(service.listar(any()))
+                .thenReturn(criarPageSessaoEntity());
+        when(converter.toPageResponseDto(any()))
+                .thenReturn(criarPageSessaoResponseDTO());
 
-        assertThat(business.listar())
+        assertThat(business.listar(getPageable()))
                 .isNotNull()
                 .hasSize(1);
     }

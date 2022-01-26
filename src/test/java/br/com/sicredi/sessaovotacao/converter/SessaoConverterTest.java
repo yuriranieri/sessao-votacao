@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static br.com.sicredi.sessaovotacao.utils.PautaUtils.criarPautaResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarPageSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarPageSessaoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
@@ -44,10 +46,10 @@ class SessaoConverterTest {
     }
 
     @Test
-    void quandoConverterToListResponseDto_retornoSucesso() {
+    void quandoConverterToPageResponseDto_retornoSucesso() {
         when(pautaConverter.toResponseDto(any(PautaEntity.class)))
                 .thenReturn(criarPautaResponseDTO());
 
-        assertEquals(criarListSessaoResponseDTO(), converter.toListResponseDto(criarListSessaoEntity()));
+        assertEquals(criarPageSessaoResponseDTO(), converter.toPageResponseDto(criarPageSessaoEntity()));
     }
 }

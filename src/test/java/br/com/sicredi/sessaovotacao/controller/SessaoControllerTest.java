@@ -11,9 +11,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarPageSessaoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -76,11 +77,13 @@ class SessaoControllerTest {
 
     @Test
     void quandoListarSessao_retornaSucesso() throws Exception {
-        when(business.listar())
-                .thenReturn(criarListSessaoResponseDTO());
+        when(business.listar(getPageable()))
+                .thenReturn(criarPageSessaoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL)
-                .contentType(APPLICATION_JSON);
+                .contentType(APPLICATION_JSON)
+                .param("page", "0")
+                .param("size", "1");
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());

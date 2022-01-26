@@ -5,13 +5,11 @@ import br.com.sicredi.sessaovotacao.dto.SessaoResponseDTO;
 import br.com.sicredi.sessaovotacao.model.PautaEntity;
 import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Component
@@ -37,10 +35,8 @@ public class SessaoConverter {
                 .build();
     }
 
-    public List<SessaoResponseDTO> toListResponseDto(List<SessaoEntity> entities) {
-        return entities.stream()
-                .map(this::toResponseDto)
-                .collect(toList());
+    public Page<SessaoResponseDTO> toPageResponseDto(Page<SessaoEntity> entities) {
+        return entities.map(this::toResponseDto);
     }
 
 }

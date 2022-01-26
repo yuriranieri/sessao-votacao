@@ -11,8 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarListSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarPageSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -41,10 +42,10 @@ class SessaoServiceTest {
 
     @Test
     void quandoListarSessao_retornaSucesso() {
-        when(repository.listarSessoes())
-                .thenReturn(criarListSessaoEntity());
+        when(repository.listarSessoes(any()))
+                .thenReturn(criarPageSessaoEntity());
 
-        assertThat(service.listar())
+        assertThat(service.listar(getPageable()))
                 .isNotNull()
                 .hasSize(1);
     }
