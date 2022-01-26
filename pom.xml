@@ -109,6 +109,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/dto/*</exclude>
+                        <exclude>**/model/*</exclude>
+                        <exclude>**/config/*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springdoc</groupId>
