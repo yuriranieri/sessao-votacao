@@ -26,11 +26,14 @@ import static br.com.sicredi.sessaovotacao.utils.AssociadoUtils.criarAssociadoEn
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarPageVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarPageVotoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarUserDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRelatorioDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -157,12 +160,12 @@ class VotoBusinessTest {
 
     @Test
     void quandoListarVoto_retornaSucesso() {
-        when(service.listar())
-                .thenReturn(criarListVotoEntity());
-        when(converter.toListResponseDto(anyList()))
-                .thenReturn(criarListVotoResponseDTO());
+        when(service.listar(any()))
+                .thenReturn(criarPageVotoEntity());
+        when(converter.toPageResponseDto(any()))
+                .thenReturn(criarPageVotoResponseDTO());
 
-        assertThat(business.listar())
+        assertThat(business.listar(getPageable()))
                 .isNotNull()
                 .hasSize(1);
     }

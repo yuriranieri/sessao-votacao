@@ -9,11 +9,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarPageVotoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRelatorioDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoResponseDTO;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -48,12 +51,28 @@ class VotoControllerTest {
     }
 
     @Test
-    void quandoListarVotos_retornaSucesso() throws Exception {
-        when(business.listar())
-                .thenReturn(criarListVotoResponseDTO());
+    void quandoListarVotos_retornaMissingServletRequestParameterException() throws Exception {
+        when(business.listar(any()))
+                .thenReturn(criarPageVotoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL)
                 .contentType(APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isBadRequest())
+                .andExpect(result ->
+                        assertTrue(result.getResolvedException() instanceof MissingServletRequestParameterException));
+    }
+
+    @Test
+    void quandoListarVotos_retornaSucesso() throws Exception {
+        when(business.listar(any()))
+                .thenReturn(criarPageVotoResponseDTO());
+
+        MockHttpServletRequestBuilder requestBuilder = get(URL)
+                .contentType(APPLICATION_JSON)
+                .param("page", "0")
+                .param("size", "1");
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk());

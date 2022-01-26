@@ -16,6 +16,9 @@ import br.com.sicredi.sessaovotacao.userapi.client.UserClient;
 import br.com.sicredi.sessaovotacao.userapi.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -49,8 +52,8 @@ public class VotoBusiness {
         return converter.toResponseDto(service.salvar(entity));
     }
 
-    public List<VotoResponseDTO> listar() {
-        return converter.toListResponseDto(service.listar());
+    public Page<VotoResponseDTO> listar(Pageable pageable) {
+        return converter.toPageResponseDto(service.listar(pageable));
     }
 
     public List<VotoResponseDTO> listarPorIdSessao(Long idSessao) {

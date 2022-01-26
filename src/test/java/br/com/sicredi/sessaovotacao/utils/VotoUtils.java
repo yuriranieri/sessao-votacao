@@ -6,6 +6,10 @@ import br.com.sicredi.sessaovotacao.dto.VotoResponseDTO;
 import br.com.sicredi.sessaovotacao.model.VotoEntity;
 import br.com.sicredi.sessaovotacao.model.VotoPK;
 import br.com.sicredi.sessaovotacao.userapi.dto.UserDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,6 +20,7 @@ import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntityNoArgs;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
 import static java.util.Collections.singletonList;
+import static org.springframework.data.domain.Sort.Direction.ASC;
 
 public abstract class VotoUtils {
 
@@ -79,6 +84,18 @@ public abstract class VotoUtils {
 
     public static List<VotoEntity> criarListVotoEntity() {
         return singletonList(criarVotoEntity());
+    }
+
+    public static Pageable getPageable() {
+        return PageRequest.of(0, 1, ASC, "id");
+    }
+
+    public static Page<VotoResponseDTO> criarPageVotoResponseDTO() {
+        return new PageImpl<>(criarListVotoResponseDTO(), getPageable(), 1L);
+    }
+
+    public static Page<VotoEntity> criarPageVotoEntity() {
+        return new PageImpl<>(criarListVotoEntity(), getPageable(), 1L);
     }
 
 }

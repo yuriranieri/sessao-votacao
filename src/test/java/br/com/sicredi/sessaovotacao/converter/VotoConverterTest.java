@@ -15,6 +15,8 @@ import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoEntity;
 import static br.com.sicredi.sessaovotacao.utils.SessaoUtils.criarSessaoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoResponseDTO;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarPageVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarPageVotoResponseDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoRequestDTO;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoResponseDTO;
@@ -76,5 +78,15 @@ class VotoConverterTest {
                 .thenReturn(criarSessaoResponseDTO());
 
         assertEquals(criarListVotoResponseDTO(), converter.toListResponseDto(criarListVotoEntity()));
+    }
+
+    @Test
+    void quandoConverterToPageResponseDto_retornaSucesso() {
+        when(associadoConverter.toResponseDto(criarAssociadoEntity()))
+                .thenReturn(criarAssociadoResponseDTO());
+        when(sessaoConverter.toResponseDto(criarSessaoEntity()))
+                .thenReturn(criarSessaoResponseDTO());
+
+        assertEquals(criarPageVotoResponseDTO(), converter.toPageResponseDto(criarPageVotoEntity()));
     }
 }

@@ -12,9 +12,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarListVotoEntity;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarPageVotoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntity;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoEntityNoArgs;
 import static br.com.sicredi.sessaovotacao.utils.VotoUtils.criarVotoPK;
+import static br.com.sicredi.sessaovotacao.utils.VotoUtils.getPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -42,10 +44,10 @@ class VotoServiceTest {
 
     @Test
     void quandoListarVoto_retornaSucesso() {
-        when(repository.listarVotos())
-                .thenReturn(criarListVotoEntity());
+        when(repository.listarVotos(any()))
+                .thenReturn(criarPageVotoEntity());
 
-        assertThat(service.listar())
+        assertThat(service.listar(getPageable()))
                 .isNotNull()
                 .hasSize(1);
     }

@@ -9,6 +9,7 @@ import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.model.VotoEntity;
 import br.com.sicredi.sessaovotacao.model.VotoPK;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -53,5 +54,9 @@ public class VotoConverter {
         return entities.stream()
                 .map(this::toResponseDto)
                 .collect(toList());
+    }
+
+    public Page<VotoResponseDTO> toPageResponseDto(Page<VotoEntity> entities) {
+        return entities.map(this::toResponseDto);
     }
 }

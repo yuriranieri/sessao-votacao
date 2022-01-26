@@ -5,6 +5,8 @@ import br.com.sicredi.sessaovotacao.model.VotoPK;
 import br.com.sicredi.sessaovotacao.repository.VotoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class VotoService {
         return repository.save(entity);
     }
 
-    public List<VotoEntity> listar() {
-        return repository.listarVotos();
+    public Page<VotoEntity> listar(Pageable pageable) {
+        return repository.listarVotos(pageable);
     }
 
     public List<VotoEntity> listarPorIdSessao(Long idSessao) {
