@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public interface VotoRepository extends JpaRepository<VotoEntity, VotoPK> {
             "join fetch v.sessao s " +
             "join fetch s.pauta " +
             "where v.sessao.id = :idSessao")
-    List<VotoEntity> listarPorIdSessao(Long idSessao);
+    List<VotoEntity> listarPorIdSessao(@Param("idSessao") Long idSessao);
 
     @Query(value = "from VotoEntity v " +
             "join fetch v.associado " +
@@ -33,5 +34,5 @@ public interface VotoRepository extends JpaRepository<VotoEntity, VotoPK> {
             "join fetch s.pauta " +
             "where v.associado.id = :idAssociado",
             countQuery = "select count(v) from VotoEntity v where v.associado.id = :idAssociado")
-    Page<VotoEntity> listarPorIdAssociado(Long idAssociado, Pageable pageable);
+    Page<VotoEntity> listarPorIdAssociado(@Param("idAssociado") Long idAssociado, Pageable pageable);
 }

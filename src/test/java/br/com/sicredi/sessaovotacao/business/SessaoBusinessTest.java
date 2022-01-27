@@ -1,9 +1,9 @@
 package br.com.sicredi.sessaovotacao.business;
 
-import br.com.sicredi.sessaovotacao.converter.SessaoConverter;
 import br.com.sicredi.sessaovotacao.dto.SessaoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.SessaoResponseDTO;
 import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
+import br.com.sicredi.sessaovotacao.mapper.SessaoMapper;
 import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.service.PautaService;
 import br.com.sicredi.sessaovotacao.service.SessaoService;
@@ -35,7 +35,7 @@ class SessaoBusinessTest {
     private SessaoBusiness business;
 
     @Mock
-    private SessaoConverter converter;
+    private SessaoMapper mapper;
 
     @Mock
     private SessaoService service;
@@ -48,7 +48,7 @@ class SessaoBusinessTest {
         Long idPauta = 1L;
         SessaoEntity entity = criarSessaoEntity();
 
-        when(converter.requestDtoToEntity(any(SessaoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(SessaoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.buscarPorIdPauta(idPauta))
                 .thenReturn(Optional.of(criarSessaoEntity()));
@@ -64,7 +64,7 @@ class SessaoBusinessTest {
         SessaoEntity entity = criarSessaoEntity();
         SessaoResponseDTO responseDTO = criarSessaoResponseDTO();
 
-        when(converter.requestDtoToEntity(any(SessaoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(SessaoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.buscarPorIdPauta(anyLong()))
                 .thenReturn(Optional.empty());
@@ -72,7 +72,7 @@ class SessaoBusinessTest {
                 .thenReturn(criarPautaEntity());
         when(service.salvar(any(SessaoEntity.class)))
                 .thenReturn(entity);
-        when(converter.toResponseDto(any(SessaoEntity.class)))
+        when(mapper.toResponseDto(any(SessaoEntity.class)))
                 .thenReturn(responseDTO);
 
         assertThat(business.salvar(criarSessaoRequestDTO()))
@@ -84,7 +84,7 @@ class SessaoBusinessTest {
     void quandoListarSessao_retornaSucesso() {
         when(service.listar(any()))
                 .thenReturn(criarPageSessaoEntity());
-        when(converter.toPageResponseDto(any()))
+        when(mapper.toPageResponseDto(any()))
                 .thenReturn(criarPageSessaoResponseDTO());
 
         assertThat(business.listar(getPageable()))
@@ -99,7 +99,7 @@ class SessaoBusinessTest {
 
         when(service.buscarPorId(id))
                 .thenReturn(criarSessaoEntity());
-        when(converter.toResponseDto(any(SessaoEntity.class)))
+        when(mapper.toResponseDto(any(SessaoEntity.class)))
                 .thenReturn(responseDTO);
 
         assertThat(business.buscarPorId(id))
@@ -110,7 +110,6 @@ class SessaoBusinessTest {
     @Test
     void quandoBuscarSessaoPorIdPauta_retornaErro() {
         Long id = anyLong();
-        SessaoResponseDTO responseDTO = criarSessaoResponseDTO();
 
         when(service.buscarPorIdPauta(id))
                 .thenReturn(Optional.empty());
@@ -127,7 +126,7 @@ class SessaoBusinessTest {
 
         when(service.buscarPorIdPauta(id))
                 .thenReturn(Optional.of(criarSessaoEntity()));
-        when(converter.toResponseDto(any(SessaoEntity.class)))
+        when(mapper.toResponseDto(any(SessaoEntity.class)))
                 .thenReturn(responseDTO);
 
         assertThat(business.buscarPorIdPauta(id))

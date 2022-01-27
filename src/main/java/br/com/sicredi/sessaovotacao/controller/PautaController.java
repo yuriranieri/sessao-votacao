@@ -1,8 +1,8 @@
 package br.com.sicredi.sessaovotacao.controller;
 
-import br.com.sicredi.sessaovotacao.converter.PautaConverter;
 import br.com.sicredi.sessaovotacao.dto.PautaRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.PautaResponseDTO;
+import br.com.sicredi.sessaovotacao.mapper.PautaMapper;
 import br.com.sicredi.sessaovotacao.service.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class PautaController {
 
     private final PautaService service;
-    private final PautaConverter converter;
+    private final PautaMapper mapper;
 
     @Operation(summary = "Cadastrar pauta")
     @PostMapping
@@ -43,8 +43,8 @@ public class PautaController {
         log.info("salvar - {}", requestDTO);
         return ResponseEntity
                 .status(CREATED)
-                .body(converter.toResponseDto(
-                        service.salvar(converter.requestDtoToEntity(requestDTO))));
+                .body(mapper.toResponseDto(
+                        service.salvar(mapper.requestDtoToEntity(requestDTO))));
     }
 
     @Operation(summary = "Listar pautas")
@@ -53,7 +53,7 @@ public class PautaController {
         log.info("listar");
         return ResponseEntity
                 .status(OK)
-                .body(converter.toPageResponseDto(service.listar(PageRequest.of(page, size, ASC, "id"))));
+                .body(mapper.toPageResponseDto(service.listar(PageRequest.of(page, size, ASC, "id"))));
     }
 
     @Operation(summary = "Buscar pauta pelo id")
@@ -62,7 +62,7 @@ public class PautaController {
         log.info("buscar por id - {}", id);
         return ResponseEntity
                 .status(OK)
-                .body(converter.toResponseDto(service.buscarPorId(id)));
+                .body(mapper.toResponseDto(service.buscarPorId(id)));
     }
 
     @Operation(summary = "Atualizar informações de uma pauta pelo id")
@@ -72,8 +72,8 @@ public class PautaController {
         log.info("atualizar por id - {} {}", requestDTO, id);
         return ResponseEntity
                 .status(OK)
-                .body(converter.toResponseDto(
-                        service.atualizar(converter.requestDtoToEntity(requestDTO), id)));
+                .body(mapper.toResponseDto(
+                        service.atualizar(mapper.requestDtoToEntity(requestDTO), id)));
     }
 
     @Operation(summary = "Deletar pauta pelo id")

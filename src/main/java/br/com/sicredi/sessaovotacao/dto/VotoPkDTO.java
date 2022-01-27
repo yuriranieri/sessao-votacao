@@ -1,5 +1,6 @@
 package br.com.sicredi.sessaovotacao.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -7,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
@@ -16,11 +16,14 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class VotoRequestDTO {
+public class VotoPkDTO {
 
-    @Valid
-    private VotoPkDTO id;
+    @NotNull(message = "id_associado é um campo obrigatório")
+    @JsonProperty(value = "id_associado")
+    private Long idAssociado;
 
-    @NotNull(message = "voto é um campo obrigatório")
-    private Character voto;
+    @NotNull(message = "id_sessao é um campo obrigatório")
+    @JsonProperty(value = "id_sessao")
+    private Long idSessao;
+
 }

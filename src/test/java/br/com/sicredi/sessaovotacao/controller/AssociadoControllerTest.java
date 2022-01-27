@@ -1,9 +1,9 @@
 package br.com.sicredi.sessaovotacao.controller;
 
-import br.com.sicredi.sessaovotacao.converter.AssociadoConverter;
 import br.com.sicredi.sessaovotacao.dto.AssociadoRequestDTO;
 import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
 import br.com.sicredi.sessaovotacao.exception.NotFoundException;
+import br.com.sicredi.sessaovotacao.mapper.AssociadoMapper;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
 import br.com.sicredi.sessaovotacao.service.AssociadoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +44,7 @@ class AssociadoControllerTest {
     private AssociadoService service;
 
     @MockBean
-    private AssociadoConverter converter;
+    private AssociadoMapper mapper;
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,11 +55,11 @@ class AssociadoControllerTest {
         AssociadoRequestDTO requestDTO = criarAssociadoRequestDTO();
         requestDTO.setCpf("74758697094");
 
-        when(converter.requestDtoToEntity(any(AssociadoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(AssociadoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.salvar(any(AssociadoEntity.class)))
                 .thenReturn(entity);
-        when(converter.toResponseDto(any(AssociadoEntity.class)))
+        when(mapper.toResponseDto(any(AssociadoEntity.class)))
                 .thenReturn(criarAssociadoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = post(URL)
@@ -74,11 +74,11 @@ class AssociadoControllerTest {
     void quandoSalvar_retornaErroBadRequestMethodArgumentNotValidException() throws Exception {
         AssociadoEntity entity = criarAssociadoEntity();
 
-        when(converter.requestDtoToEntity(any(AssociadoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(AssociadoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.salvar(any(AssociadoEntity.class)))
                 .thenReturn(entity);
-        when(converter.toResponseDto(any(AssociadoEntity.class)))
+        when(mapper.toResponseDto(any(AssociadoEntity.class)))
                 .thenReturn(criarAssociadoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = post(URL)
@@ -95,11 +95,11 @@ class AssociadoControllerTest {
         AssociadoRequestDTO requestDTO = criarAssociadoRequestDTO();
         requestDTO.setCpf("74758697094");
 
-        when(converter.requestDtoToEntity(any(AssociadoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(AssociadoRequestDTO.class)))
                 .thenReturn(criarAssociadoEntity());
         when(service.salvar(any(AssociadoEntity.class)))
                 .thenThrow(new ErrorBusinessException(""));
-        when(converter.toResponseDto(any(AssociadoEntity.class)))
+        when(mapper.toResponseDto(any(AssociadoEntity.class)))
                 .thenReturn(criarAssociadoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = post(URL)
@@ -126,7 +126,7 @@ class AssociadoControllerTest {
     void quandoListar_retornaSucesso() throws Exception {
         when(service.listar(any()))
                 .thenReturn(criarPageAssociadoEntity());
-        when(converter.toPageResponseDto(any()))
+        when(mapper.toPageResponseDto(any()))
                 .thenReturn(criarPageAssociadoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL)
@@ -173,7 +173,7 @@ class AssociadoControllerTest {
 
         when(service.buscarPorId(id))
                 .thenReturn(criarAssociadoEntity());
-        when(converter.toResponseDto(any(AssociadoEntity.class)))
+        when(mapper.toResponseDto(any(AssociadoEntity.class)))
                 .thenReturn(criarAssociadoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL.concat("/{id}"), id)
@@ -189,11 +189,11 @@ class AssociadoControllerTest {
         AssociadoRequestDTO requestDTO = criarAssociadoRequestDTO();
         requestDTO.setCpf("74758697094");
 
-        when(converter.requestDtoToEntity(any(AssociadoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(AssociadoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.atualizar(any(AssociadoEntity.class), anyLong()))
                 .thenReturn(entity);
-        when(converter.toResponseDto(any(AssociadoEntity.class)))
+        when(mapper.toResponseDto(any(AssociadoEntity.class)))
                 .thenReturn(criarAssociadoResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = put(URL.concat("/{id}"), 1L)

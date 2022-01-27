@@ -1,7 +1,7 @@
 package br.com.sicredi.sessaovotacao.controller;
 
-import br.com.sicredi.sessaovotacao.converter.PautaConverter;
 import br.com.sicredi.sessaovotacao.dto.PautaRequestDTO;
+import br.com.sicredi.sessaovotacao.mapper.PautaMapper;
 import br.com.sicredi.sessaovotacao.model.PautaEntity;
 import br.com.sicredi.sessaovotacao.service.PautaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +37,7 @@ class PautaControllerTest {
     private PautaService service;
 
     @MockBean
-    private PautaConverter converter;
+    private PautaMapper mapper;
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,11 +46,11 @@ class PautaControllerTest {
     void quandoSalvarPauta_retornaSucesso() throws Exception {
         PautaEntity entity = criarPautaEntity();
 
-        when(converter.requestDtoToEntity(any(PautaRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(PautaRequestDTO.class)))
                 .thenReturn(entity);
         when(service.salvar(any(PautaEntity.class)))
                 .thenReturn(entity);
-        when(converter.toResponseDto(any(PautaEntity.class)))
+        when(mapper.toResponseDto(any(PautaEntity.class)))
                 .thenReturn(criarPautaResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = post(URL)
@@ -65,7 +65,7 @@ class PautaControllerTest {
     void quandoListarPauta_retornaSucesso() throws Exception {
         when(service.listar(any()))
                 .thenReturn(criarPagePautaEntity());
-        when(converter.toPageResponseDto(any()))
+        when(mapper.toPageResponseDto(any()))
                 .thenReturn(criarPagePautaResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL)
@@ -83,7 +83,7 @@ class PautaControllerTest {
 
         when(service.buscarPorId(id))
                 .thenReturn(criarPautaEntity());
-        when(converter.toResponseDto(any(PautaEntity.class)))
+        when(mapper.toResponseDto(any(PautaEntity.class)))
                 .thenReturn(criarPautaResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = get(URL.concat("/{id}"), id)
@@ -97,11 +97,11 @@ class PautaControllerTest {
     void quandoAtualizarPauta_retornaSucesso() throws Exception {
         PautaEntity entity = criarPautaEntity();
 
-        when(converter.requestDtoToEntity(any(PautaRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(PautaRequestDTO.class)))
                 .thenReturn(entity);
         when(service.atualizar(any(PautaEntity.class), anyLong()))
                 .thenReturn(entity);
-        when(converter.toResponseDto(any(PautaEntity.class)))
+        when(mapper.toResponseDto(any(PautaEntity.class)))
                 .thenReturn(criarPautaResponseDTO());
 
         MockHttpServletRequestBuilder requestBuilder = put(URL.concat("/{id}"), 1L)

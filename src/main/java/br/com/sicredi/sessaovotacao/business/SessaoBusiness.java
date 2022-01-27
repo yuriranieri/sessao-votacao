@@ -1,9 +1,9 @@
 package br.com.sicredi.sessaovotacao.business;
 
-import br.com.sicredi.sessaovotacao.converter.SessaoConverter;
 import br.com.sicredi.sessaovotacao.dto.SessaoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.SessaoResponseDTO;
 import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
+import br.com.sicredi.sessaovotacao.mapper.SessaoMapper;
 import br.com.sicredi.sessaovotacao.model.PautaEntity;
 import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.service.PautaService;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -23,12 +22,12 @@ import java.util.Optional;
 @Component
 public class SessaoBusiness {
 
-    private final SessaoConverter converter;
+    private final SessaoMapper mapper;
     private final SessaoService service;
     private final PautaService pautaService;
 
     public SessaoResponseDTO salvar(SessaoRequestDTO requestDTO) {
-        SessaoEntity entity = converter.requestDtoToEntity(requestDTO);
+        SessaoEntity entity = mapper.requestDtoToEntity(requestDTO);
         Long idPauta = requestDTO.getIdPauta();
         LocalDateTime dateTimeNow = LocalDateTime.now();
 
@@ -38,16 +37,16 @@ public class SessaoBusiness {
         entity.setPauta(getPauta(idPauta));
 
         log.info("salvar - {}", entity);
-        return converter.toResponseDto(service.salvar(entity));
+        return mapper.toResponseDto(service.salvar(entity));
     }
 
     public Page<SessaoResponseDTO> listar(Pageable pageable) {
-        return converter.toPageResponseDto(service.listar(pageable));
+        return mapper.toPageResponseDto(service.listar(pageable));
     }
 
     public SessaoResponseDTO buscarPorId(Long id) {
         log.info("buscar por id - {}", id);
-        return converter.toResponseDto(service.buscarPorId(id));
+        return mapper.toResponseDto(service.buscarPorId(id));
     }
 
     public SessaoResponseDTO buscarPorIdPauta(Long idPauta) {
@@ -55,7 +54,7 @@ public class SessaoBusiness {
         SessaoEntity entity = getSessaoEntityPorPauta(idPauta)
                 .orElseThrow(() -> new ErrorBusinessException(
                         String.format("Não existe sessão para a pauta %d", idPauta)));
-        return converter.toResponseDto(entity);
+        return mapper.toResponseDto(entity);
     }
 
     private void validaSessaoPorPauta(Long idPauta) {

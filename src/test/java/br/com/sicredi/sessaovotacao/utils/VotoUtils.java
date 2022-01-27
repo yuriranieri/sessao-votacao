@@ -1,5 +1,6 @@
 package br.com.sicredi.sessaovotacao.utils;
 
+import br.com.sicredi.sessaovotacao.dto.VotoPkDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoRelatorioDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoResponseDTO;
@@ -26,15 +27,14 @@ public abstract class VotoUtils {
 
     public static VotoRequestDTO criarVotoRequestDTO() {
         return VotoRequestDTO.builder()
-                .idAssociado(1L)
-                .idSessao(1L)
+                .id(new VotoPkDTO(1L, 1L))
                 .voto('s')
                 .build();
     }
 
     public static VotoResponseDTO criarVotoResponseDTO() {
         return VotoResponseDTO.builder()
-                .id(criarVotoPK())
+                .id(criarVotoPkDTO())
                 .voto("SIM")
                 .associado(criarAssociadoResponseDTO())
                 .sessao(criarSessaoResponseDTO())
@@ -61,6 +61,10 @@ public abstract class VotoUtils {
 
     public static VotoPK criarVotoPK() {
         return new VotoPK(1L, 1L);
+    }
+
+    public static VotoPkDTO criarVotoPkDTO() {
+        return new VotoPkDTO(1L, 1L);
     }
 
     public static VotoPK criarVotoPkNoArgs() {

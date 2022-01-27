@@ -1,9 +1,9 @@
 package br.com.sicredi.sessaovotacao.business;
 
-import br.com.sicredi.sessaovotacao.converter.VotoConverter;
 import br.com.sicredi.sessaovotacao.dto.VotoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoResponseDTO;
 import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
+import br.com.sicredi.sessaovotacao.mapper.VotoMapper;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
 import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.model.VotoEntity;
@@ -50,7 +50,7 @@ class VotoBusinessTest {
     private VotoBusiness business;
 
     @Mock
-    private VotoConverter converter;
+    private VotoMapper mapper;
 
     @Mock
     private VotoService service;
@@ -70,7 +70,7 @@ class VotoBusinessTest {
         VotoEntity entity = criarVotoEntity();
         VotoPK votoPK = entity.getId();
 
-        when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.buscarPorId(any(VotoPK.class)))
                 .thenReturn(Optional.of(entity));
@@ -90,7 +90,7 @@ class VotoBusinessTest {
         UserDTO userDTO = criarUserDTO();
         userDTO.setStatus("UNABLE_TO_VOTE");
 
-        when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.buscarPorId(any(VotoPK.class)))
                 .thenReturn(Optional.empty());
@@ -113,7 +113,7 @@ class VotoBusinessTest {
         sessaoEntity.setDataInicio(LocalDateTime.now().minusMinutes(10));
         sessaoEntity.setDataFinal(LocalDateTime.now().minusMinutes(5));
 
-        when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.buscarPorId(any(VotoPK.class)))
                 .thenReturn(Optional.empty());
@@ -138,7 +138,7 @@ class VotoBusinessTest {
         sessaoEntity.setDataInicio(LocalDateTime.now());
         sessaoEntity.setDataFinal(LocalDateTime.now().plusMinutes(5));
 
-        when(converter.requestDtoToEntity(any(VotoRequestDTO.class)))
+        when(mapper.requestDtoToEntity(any(VotoRequestDTO.class)))
                 .thenReturn(entity);
         when(service.buscarPorId(any(VotoPK.class)))
                 .thenReturn(Optional.empty());
@@ -150,7 +150,7 @@ class VotoBusinessTest {
                 .thenReturn(sessaoEntity);
         when(service.salvar(any(VotoEntity.class)))
                 .thenReturn(entity);
-        when(converter.toResponseDto(any(VotoEntity.class)))
+        when(mapper.toResponseDto(any(VotoEntity.class)))
                 .thenReturn(responseDTO);
 
         assertThat(business.salvar(criarVotoRequestDTO()))
@@ -162,7 +162,7 @@ class VotoBusinessTest {
     void quandoListarVoto_retornaSucesso() {
         when(service.listar(any()))
                 .thenReturn(criarPageVotoEntity());
-        when(converter.toPageResponseDto(any()))
+        when(mapper.toPageResponseDto(any()))
                 .thenReturn(criarPageVotoResponseDTO());
 
         assertThat(business.listar(getPageable()))
@@ -176,7 +176,7 @@ class VotoBusinessTest {
 
         when(service.listarPorIdSessao(idSessao))
                 .thenReturn(criarListVotoEntity());
-        when(converter.toListResponseDto(anyList()))
+        when(mapper.toListResponseDto(anyList()))
                 .thenReturn(criarListVotoResponseDTO());
 
         assertThat(business.listarPorIdSessao(idSessao))
@@ -190,7 +190,7 @@ class VotoBusinessTest {
 
         when(service.listarPorIdAssociado(idSessao, any()))
                 .thenReturn(criarPageVotoEntity());
-        when(converter.toPageResponseDto(any()))
+        when(mapper.toPageResponseDto(any()))
                 .thenReturn(criarPageVotoResponseDTO());
 
         assertThat(business.listarPorIdAssociado(idSessao, getPageable()))
@@ -224,7 +224,7 @@ class VotoBusinessTest {
                 .thenReturn(sessaoEntity);
         when(service.listarPorIdSessao(idSessao))
                 .thenReturn(criarListVotoEntity());
-        when(converter.toListResponseDto(anyList()))
+        when(mapper.toListResponseDto(anyList()))
                 .thenReturn(criarListVotoResponseDTO());
 
         assertEquals(criarVotoRelatorioDTO(), business.calcularVotosDaSessao(idSessao));

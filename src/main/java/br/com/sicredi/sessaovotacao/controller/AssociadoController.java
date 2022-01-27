@@ -1,8 +1,8 @@
 package br.com.sicredi.sessaovotacao.controller;
 
-import br.com.sicredi.sessaovotacao.converter.AssociadoConverter;
 import br.com.sicredi.sessaovotacao.dto.AssociadoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.AssociadoResponseDTO;
+import br.com.sicredi.sessaovotacao.mapper.AssociadoMapper;
 import br.com.sicredi.sessaovotacao.service.AssociadoService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class AssociadoController {
 
     private final AssociadoService service;
-    private final AssociadoConverter converter;
+    private final AssociadoMapper mapper;
 
     @Operation(summary = "Cadastrar associado")
     @PostMapping
@@ -43,8 +43,8 @@ public class AssociadoController {
         log.info("salvar - {}", requestDTO);
         return ResponseEntity
                 .status(CREATED)
-                .body(converter.toResponseDto(
-                        service.salvar(converter.requestDtoToEntity(requestDTO))));
+                .body(mapper.toResponseDto(
+                        service.salvar(mapper.requestDtoToEntity(requestDTO))));
     }
 
     @Operation(summary = "Listar associados")
@@ -53,7 +53,7 @@ public class AssociadoController {
         log.info("listar");
         return ResponseEntity
                 .status(OK)
-                .body(converter.toPageResponseDto(service.listar(PageRequest.of(page, size, ASC, "id"))));
+                .body(mapper.toPageResponseDto(service.listar(PageRequest.of(page, size, ASC, "id"))));
     }
 
     @Operation(summary = "Buscar associado pelo id")
@@ -62,7 +62,7 @@ public class AssociadoController {
         log.info("buscar por id - {}", id);
         return ResponseEntity
                 .status(OK)
-                .body(converter.toResponseDto(service.buscarPorId(id)));
+                .body(mapper.toResponseDto(service.buscarPorId(id)));
     }
 
     @Operation(summary = "Atualizar informações de um associado pelo id")
@@ -72,8 +72,8 @@ public class AssociadoController {
         log.info("atualizar por id - {} {}", requestDTO, id);
         return ResponseEntity
                 .status(OK)
-                .body(converter.toResponseDto(
-                        service.atualizar(converter.requestDtoToEntity(requestDTO), id)));
+                .body(mapper.toResponseDto(
+                        service.atualizar(mapper.requestDtoToEntity(requestDTO), id)));
     }
 
     @Operation(summary = "Deletar associado pelo id")

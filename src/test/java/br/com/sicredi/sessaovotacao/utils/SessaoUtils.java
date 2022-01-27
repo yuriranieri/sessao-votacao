@@ -32,8 +32,17 @@ public abstract class SessaoUtils {
                 .id(1L)
                 .dataInicio(dataInicio)
                 .dataFinal(dataInicio.plusMinutes(1))
-                .tempoExpiracaoEmMinutos(1L)
                 .pautaResponseDTO(criarPautaResponseDTO())
+                .build();
+    }
+
+    public static SessaoResponseDTO criarSessaoResponseDtoComPautaNull() {
+        LocalDateTime dataInicio = LocalDateTime.of(LocalDate.now(), LocalTime.of(17, 10));
+        return SessaoResponseDTO.builder()
+                .id(1L)
+                .dataInicio(dataInicio)
+                .dataFinal(dataInicio.plusMinutes(1))
+                .pautaResponseDTO(null)
                 .build();
     }
 
@@ -44,6 +53,16 @@ public abstract class SessaoUtils {
                 .dataInicio(dataInicio)
                 .dataFinal(dataInicio.plusMinutes(1))
                 .pauta(criarPautaEntity())
+                .build();
+    }
+
+    public static SessaoEntity criarSessaoEntityComPautaNull() {
+        LocalDateTime dataInicio = LocalDateTime.of(LocalDate.now(), LocalTime.of(17, 10));
+        return SessaoEntity.builder()
+                .id(1L)
+                .dataInicio(dataInicio)
+                .dataFinal(dataInicio.plusMinutes(1))
+                .pauta(null)
                 .build();
     }
 

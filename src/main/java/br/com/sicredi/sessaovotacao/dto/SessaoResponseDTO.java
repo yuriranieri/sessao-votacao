@@ -27,9 +27,6 @@ public class SessaoResponseDTO {
     @JsonProperty(value = "data_final")
     private LocalDateTime dataFinal;
 
-    @JsonProperty(value = "tempo_expiracao_em_minutos")
-    private Long tempoExpiracaoEmMinutos;
-
     @JsonProperty(value = "pauta")
     private PautaResponseDTO pautaResponseDTO;
 

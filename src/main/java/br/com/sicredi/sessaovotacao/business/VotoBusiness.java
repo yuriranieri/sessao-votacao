@@ -1,10 +1,10 @@
 package br.com.sicredi.sessaovotacao.business;
 
-import br.com.sicredi.sessaovotacao.converter.VotoConverter;
 import br.com.sicredi.sessaovotacao.dto.VotoRelatorioDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoRequestDTO;
 import br.com.sicredi.sessaovotacao.dto.VotoResponseDTO;
 import br.com.sicredi.sessaovotacao.exception.ErrorBusinessException;
+import br.com.sicredi.sessaovotacao.mapper.VotoMapper;
 import br.com.sicredi.sessaovotacao.model.AssociadoEntity;
 import br.com.sicredi.sessaovotacao.model.SessaoEntity;
 import br.com.sicredi.sessaovotacao.model.VotoEntity;
@@ -32,37 +32,38 @@ import static br.com.sicredi.sessaovotacao.userapi.dto.StatusEnum.UNABLE_TO_VOTE
 @Component
 public class VotoBusiness {
 
-    private final VotoConverter converter;
+    private final VotoMapper mapper;
     private final VotoService service;
     private final UserClient userClient;
     private final AssociadoService associadoService;
     private final SessaoService sessaoService;
 
     public VotoResponseDTO salvar(VotoRequestDTO requestDTO) {
-        VotoEntity entity = converter.requestDtoToEntity(requestDTO);
-        validaSeAssociadoVotouAnteriomente(requestDTO.getIdAssociado(), requestDTO.getIdSessao());
-        entity.setAssociado(carregarAssociadoEntity(requestDTO.getIdAssociado()));
+        VotoEntity entity = mapper.requestDtoToEntity(requestDTO);
+        VotoPK id = entity.getId();
 
-        SessaoEntity sessaoEntity = carregarSessaoEntity(requestDTO.getIdSessao());
+        validaSeAssociadoVotouAnteriomente(id);
+        entity.setAssociado(carregarAssociadoEntity(id.getIdAssociado()));
+        SessaoEntity sessaoEntity = carregarSessaoEntity(id.getIdSessao());
         validarDataFimSessao(sessaoEntity.getDataFinal());
         entity.setSessao(sessaoEntity);
 
         log.info("salvar - {}", entity);
-        return converter.toResponseDto(service.salvar(entity));
+        return mapper.toResponseDto(service.salvar(entity));
     }
 
     public Page<VotoResponseDTO> listar(Pageable pageable) {
-        return converter.toPageResponseDto(service.listar(pageable));
+        return mapper.toPageResponseDto(service.listar(pageable));
     }
 
     public List<VotoResponseDTO> listarPorIdSessao(Long idSessao) {
         log.info("listar por idSessao - {}", idSessao);
-        return converter.toListResponseDto(service.listarPorIdSessao(idSessao));
+        return mapper.toListResponseDto(service.listarPorIdSessao(idSessao));
     }
 
     public Page<VotoResponseDTO> listarPorIdAssociado(Long idAssociado, Pageable pageable) {
         log.info("listar por idAssociado - {}", idAssociado);
-        return converter.toPageResponseDto(service.listarPorIdAssociado(idAssociado, pageable));
+        return mapper.toPageResponseDto(service.listarPorIdAssociado(idAssociado, pageable));
     }
 
     public VotoRelatorioDTO calcularVotosDaSessao(Long idSessao) {
@@ -82,8 +83,8 @@ public class VotoBusiness {
         return new VotoRelatorioDTO(quantidadeVotosSim, quantidadeVotosNao);
     }
 
-    private void validaSeAssociadoVotouAnteriomente(Long idAssociado, Long idSessao) {
-        service.buscarPorId(new VotoPK(idAssociado, idSessao))
+    private void validaSeAssociadoVotouAnteriomente(VotoPK votoPK) {
+        service.buscarPorId(votoPK)
                 .ifPresent(voto -> {
                     VotoPK id = voto.getId();
                     throw new ErrorBusinessException(
@@ -97,7 +98,7 @@ public class VotoBusiness {
         AssociadoEntity associadoEntity = associadoService.buscarPorId(idAssociado);
         UserDTO userDTO = userClient.carregarEntidade(associadoEntity.getCpf());
 
-        if (associadoNaoPuderVotar(userDTO)) {
+        if (associadoNaoPuderVotar(userDTO.getStatus())) {
             throw new ErrorBusinessException(
                     String.format("Associado com o cpf %s não pode votar", associadoEntity.getCpf()));
         }
@@ -105,8 +106,8 @@ public class VotoBusiness {
         return associadoEntity;
     }
 
-    private boolean associadoNaoPuderVotar(UserDTO userDTO) {
-        return Objects.equals(userDTO.getStatus(), UNABLE_TO_VOTE.getDescricao());
+    private boolean associadoNaoPuderVotar(String status) {
+        return Objects.equals(status, UNABLE_TO_VOTE.getDescricao());
     }
 
     private SessaoEntity carregarSessaoEntity(Long idSessao) {
