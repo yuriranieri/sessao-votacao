@@ -72,6 +72,9 @@ O projeto **sessao-votacao** possui o objetivo de gerenciar votações de associ
   ```bash
   # clonar o repositório
   git clone https://github.com/yuriranieri/sessao-votacao.git
+  
+  #build
+  mvn clean install
 
   # executar o projeto
   ./mvnw spring-boot:run
