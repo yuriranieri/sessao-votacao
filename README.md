@@ -83,3 +83,4 @@ O projeto **sessao-votacao** possui o objetivo de gerenciar votações de associ
 ## 🙋‍♂️ Autor:
 
 - Yuri Furtado Ranieri
+- yurifranieri@gmail.com
